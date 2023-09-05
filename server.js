@@ -22,11 +22,24 @@ app.get('/new', (req, res) => {
   });
 });
 
+app.post('/login', (req, res) => {
+  const email = req.body.userId;
+  const queryString = `SELECT * FROM user WHERE email=?`;
+  conn.query(queryString, email, function(err, result) {
+    if(!result.length) {
+      console.log("empty", typeof result.length);
+      res.json("No Data");
+    } else
+      console.log("=============================", result);
+  })
+})
+
 app.post('/add', (req, res) => {
   console.log('11111111111111111111111111111111');
   console.log(req.body);
   const name = req.body.userName;
   const email = req.body.userId;
+
   const queryString = `INSERT INTO user (userName, email, password) VALUES ('${name}', '${email}', '"1234"')`;
   conn.query(queryString, function(err, result) {
     if(err) {
@@ -36,7 +49,6 @@ app.post('/add', (req, res) => {
     }
   })
   res.json("asdf");
-
 })
 
 app.listen(8080, () => {
