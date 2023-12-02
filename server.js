@@ -28,9 +28,10 @@ app.post('/login', (req, res) => {
   conn.query(queryString, email, function(err, result) {
     if(!result.length) {
       console.log("empty", typeof result.length);
-      res.json("No Data");
+      res.json("user not found");
     } else
       console.log("=============================", result);
+      res.json(result)
   })
 })
 
@@ -46,9 +47,9 @@ app.post('/add', (req, res) => {
       console.log(err);
     } else {
       console.log('user Info insert successfully');
+      res.json("user added");
     }
   })
-  res.json("asdf");
 })
 
 app.listen(8080, () => {
